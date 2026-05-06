@@ -20,9 +20,9 @@ val Player.identityObject : Identity<Player>
 
 @Suppress("DEPRECATION")
 var LivingEntity.quickMaxHealth: Double
-	get() = getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue ?: maxHealth
+	get() = getAttribute(Attribute.MAX_HEALTH)?.baseValue ?: maxHealth
 	set(value) {
-		getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue = value
+		getAttribute(Attribute.MAX_HEALTH)?.baseValue = value
 	}
 
 fun LivingEntity.maxOutHealth() {

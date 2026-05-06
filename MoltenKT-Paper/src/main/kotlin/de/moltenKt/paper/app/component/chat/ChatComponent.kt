@@ -43,10 +43,10 @@ class ChatComponent : SmartComponent(AUTOSTART_MUTABLE) {
 				setupPath.writeJson(it)
 			}
 
-			pluginOrNull("PlaceholderAPI")?.let {
+			/*pluginOrNull("PlaceholderAPI")?.let {
 				usePlaceholderAPI = true
 				debugLog { "PlaceholderAPI ${it.description.version} found by ChatComponent!" }
-			} ?: debugLog { "ChatComponent unable to find PlaceholderAPI, skipping custom placeholders!" }
+			} ?: debugLog { "ChatComponent unable to find PlaceholderAPI, skipping custom placeholders!" }*/
 
 		}
 
@@ -75,7 +75,7 @@ class ChatComponent : SmartComponent(AUTOSTART_MUTABLE) {
 		 * @author CoasterFreakDE
 		 * @since 1.0
 		 */
-		var usePlaceholderAPI: Boolean = false
+		//var usePlaceholderAPI: Boolean = false
 	}
 
 }

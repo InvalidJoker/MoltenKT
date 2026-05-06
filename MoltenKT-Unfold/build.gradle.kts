@@ -1,9 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    id("org.jetbrains.dokka")
     `maven-publish`
 }
 
@@ -26,26 +23,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
     implementation("io.ktor:ktor-client-core-jvm:2.1.1")
 
-}
-
-tasks {
-
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-}
-
-val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
-    dependsOn(tasks.dokkaJavadocPartial)
-    from(tasks.dokkaJavadocPartial.flatMap { it.outputDirectory })
-    archiveClassifier.set("javadoc")
-}
-
-val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
-    dependsOn(tasks.dokkaHtmlPartial)
-    from(tasks.dokkaHtmlPartial.flatMap { it.outputDirectory })
-    archiveClassifier.set("html-doc")
 }
 
 val source by tasks.register<Jar>("sourceJar") {
@@ -74,20 +51,11 @@ publishing {
 
         from(components["kotlin"])
 
-        artifact(dokkaJavadocJar)
-        artifact(dokkaHtmlJar)
         artifact(source)
 
         artifactId = "moltenkt-unfold"
-        version = version.toLowerCase()
+        version = version.lowercase()
 
     }
 
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-    withJavadocJar()
-    withSourcesJar()
 }

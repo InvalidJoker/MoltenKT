@@ -19,7 +19,6 @@ import de.moltenKt.unfold.extension.replace
 import de.moltenKt.unfold.plus
 import de.moltenKt.unfold.text
 import io.papermc.paper.event.player.AsyncChatEvent
-import me.clip.placeholderapi.PlaceholderAPI
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.minimessage.tag.Tag
@@ -82,7 +81,7 @@ internal class ChatListener : EventListener() {
 		buildComponent {
 
 			this + (when {
-				ChatComponent.usePlaceholderAPI -> PlaceholderAPI.setPlaceholders(player, setup.chatFormat)
+				//ChatComponent.usePlaceholderAPI -> PlaceholderAPI.setPlaceholders(player, setup.chatFormat)
 				else -> setup.chatFormat
 			}).asStyledComponent
 				.replaceText {

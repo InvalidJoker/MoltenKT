@@ -179,5 +179,5 @@ fun Block.toFallingBlock() = blockData.clone().let { data ->
 @RequiresSync
 fun Block.ignite(): TNTPrimed {
     type = AIR
-    return world.spawnEntity(location.toCenterLocation(), EntityType.PRIMED_TNT) as TNTPrimed
+    return world.spawnEntity(location.toCenterLocation(), EntityType.TNT) as TNTPrimed
 }

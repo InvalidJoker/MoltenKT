@@ -25,6 +25,10 @@ interface KeyedIdentifiable<T> : VendorsIdentifiable<T>, Key, Keyed {
 
     override fun asString(): String = identityKey.asString()
 
+    override fun key(): Key {
+        return identityKey
+    }
+
     override fun getKey() = NamespacedKey.fromString(asString())!!
 
     companion object {

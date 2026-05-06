@@ -167,6 +167,10 @@ abstract class App : JavaPlugin(), Hoster<Unit, Unit, App> {
 	override val identityKey: Key
 		get() = Key.key(Infrastructure.SYSTEM_IDENTITY, companion.predictedIdentity.lowercase())
 
+	override fun namespace(): String {
+		return identityKey.namespace()
+	}
+
 	/**
 	 * The cache of the application
 	 */

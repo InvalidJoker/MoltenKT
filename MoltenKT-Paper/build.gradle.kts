@@ -5,8 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    id("org.jetbrains.dokka")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.gradleup.shadow") version "9.4.1"
     `maven-publish`
 }
 
@@ -16,9 +15,8 @@ repositories {
 
     mavenCentral()
     maven("https://jitpack.io")
-    maven("https://papermc.io/repo/repository/maven-public/") // PaperMC
+    maven("https://repo.papermc.io/repository/maven-public/") // PaperMC
     maven("https://libraries.minecraft.net") // Minecraft (Brigadier)
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") // PlaceholderAPI
 }
 
 dependencies {
@@ -38,17 +36,16 @@ dependencies {
     // Kotlin
 
     testImplementation(kotlin("test"))
-    implementation(kotlin("reflect"))
+    @Suppress("DependencyOnStdlib") shadow(kotlin("stdlib"))
+    shadow(kotlin("reflect"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     // External
 
-    @Suppress("DependencyOnStdlib") implementation(kotlin("stdlib"))
-
     implementation("org.slf4j:slf4j-api:2.0.2")
-    implementation("com.mojang:brigadier:1.0.18")
+    //implementation("com.mojang:brigadier:1.0.18")
 
     // > Ktor
     implementation("io.ktor:ktor-client-cio:2.1.1")
@@ -56,13 +53,10 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.1.1")
     implementation("io.ktor:ktor-client-content-negotiation:2.1.1")
 
-    implementation("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT") // PaperMC
-    compileOnly("me.clip:placeholderapi:2.11.2") // PlaceholderAPI
+    implementation("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT") // PaperMC
+    //compileOnly("me.clip:placeholderapi:2.11.2") // PlaceholderAPI
 
     // Shadow
-
-    @Suppress("DependencyOnStdlib") shadow(kotlin("stdlib"))
-    shadow(kotlin("reflect"))
 
     shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
     shadow("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
@@ -84,18 +78,6 @@ dependencies {
     shadow("net.kyori:adventure-text-serializer-legacy:4.11.0")
     shadow("net.kyori:adventure-text-minimessage:4.11.0")
 
-}
-
-val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
-    dependsOn(tasks.dokkaJavadocPartial)
-    from(tasks.dokkaJavadocPartial.flatMap { it.outputDirectory })
-    archiveClassifier.set("javadoc")
-}
-
-val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
-    dependsOn(tasks.dokkaHtmlPartial)
-    from(tasks.dokkaHtmlPartial.flatMap { it.outputDirectory })
-    archiveClassifier.set("html-doc")
 }
 
 val source by tasks.register<Jar>("sourceJar") {
@@ -120,12 +102,10 @@ publishing {
 
         from(components["kotlin"])
 
-        artifact(dokkaJavadocJar)
-        artifact(dokkaHtmlJar)
         artifact(source)
 
         artifactId = "moltenkt-paper"
-        version = version.toLowerCase()
+        version = version.lowercase()
 
     }
 }
@@ -134,10 +114,6 @@ tasks {
 
     build {
         dependsOn(shadowJar)
-    }
-
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
     }
 
     named<ShadowJar>("shadowJar") {
@@ -155,9 +131,3 @@ tasks {
 
 }
 
-java {
-    sourceCompatibility = VERSION_17
-    targetCompatibility = VERSION_17
-    withJavadocJar()
-    withSourcesJar()
-}

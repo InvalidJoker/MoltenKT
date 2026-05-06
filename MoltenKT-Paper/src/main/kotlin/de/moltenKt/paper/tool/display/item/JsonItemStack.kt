@@ -106,7 +106,7 @@ object JsonItemStack {
                 }
             } else if (meta is BannerMeta) {
                 val extraMeta = JsonObject()
-                extraMeta.addProperty("base-color", meta.baseColor!!.name)
+                //extraMeta.addProperty("base-color", meta.baseColor!!.name)
                 if (meta.numberOfPatterns() > 0) {
                     val patterns = JsonArray()
                     meta.patterns
@@ -348,9 +348,9 @@ object JsonItemStack {
                                     meta.owner = ownerElement.asString
                                 }
                             } else if (meta is BannerMeta) {
-                                val baseColorElement = extraJson["base-color"]
+                                // val baseColorElement = extraJson["base-color"]
                                 val patternsElement = extraJson["patterns"]
-                                if (baseColorElement != null && baseColorElement.isJsonPrimitive) {
+                                /*if (baseColorElement != null && baseColorElement.isJsonPrimitive) {
                                     try {
                                         val color = Arrays.stream(DyeColor.values())
                                             .filter { dyeColor: DyeColor ->
@@ -361,11 +361,11 @@ object JsonItemStack {
                                             }
                                             .findFirst()
                                         if (color.isPresent) {
-                                            meta.baseColor = color.get()
+                                            //meta.baseColor = color.get()
                                         }
                                     } catch (_: NumberFormatException) {
                                     }
-                                }
+                                }*/
                                 if (patternsElement != null && patternsElement.isJsonArray) {
                                     val jarray = patternsElement.asJsonArray
                                     val patterns: MutableList<Pattern> = ArrayList(jarray.size())
